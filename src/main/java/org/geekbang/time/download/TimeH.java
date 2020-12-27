@@ -28,8 +28,8 @@ public class TimeH {
                 throw new RuntimeException("文件" + path + "创建失败");
             }
         }
-        // getData(path, 160463);
-        getData(path, 214014);
+         getData(path, 160463);
+//        getData(path, 214014);
     }
 
 
@@ -51,21 +51,21 @@ public class TimeH {
         String string = response.body().string();
         JSONObject json = JSON.parseObject(string).getJSONObject("data");
 
-        String lineSeparator = System.lineSeparator();
-        StringBuilder builder = new StringBuilder();
+//        String lineSeparator = System.lineSeparator();
+//        StringBuilder builder = new StringBuilder();
         String title = json.getString("article_title");
         System.out.println(title);
-        builder.append("# ").append(title).append(lineSeparator);
-        builder.append(json.getString("author_name")).append(lineSeparator);
-        builder.append("![](").append(json.getString("article_cover")).append(")").append(lineSeparator);
-        builder.append("> ").append(json.getString("article_summary")).append(lineSeparator).append(lineSeparator);
-        builder.append("<html>").append(lineSeparator);
-        builder.append("<audio src=\"").append(json.getString("audio_download_url")).append("\" controls /></audio>").append(lineSeparator);
-        builder.append(json.getString("article_content")).append(lineSeparator);
-        builder.append("</html>").append(lineSeparator);
+//        builder.append("# ").append(title).append(lineSeparator);
+//        builder.append(json.getString("author_name")).append(lineSeparator);
+//        builder.append("![](").append(json.getString("article_cover")).append(")").append(lineSeparator);
+//        builder.append("> ").append(json.getString("article_summary")).append(lineSeparator).append(lineSeparator);
+//        builder.append("<html>").append(lineSeparator);
+//        builder.append("<audio src=\"").append(json.getString("audio_download_url")).append("\" controls /></audio>").append(lineSeparator);
+//        builder.append(json.getString("article_content")).append(lineSeparator);
+//        builder.append("</html>").append(lineSeparator);
 
 
-        File file = new File(path, title.replace("|", "-").replace("/", " ") + ".md");
+        File file = new File(path, title.replace("|", "-").replace("/", " ") + ".json");
         if (file.exists()) {
             if (!file.delete()) {
                 throw new RuntimeException("文件" + file + "已存在无法删除");
@@ -76,7 +76,7 @@ public class TimeH {
         }
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-        writer.write(builder.toString());
+        writer.write(string);
         writer.close();
 
         JSONObject neighbors = json.getJSONObject("neighbors");
